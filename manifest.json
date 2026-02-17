@@ -44,12 +44,8 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "clipboardWrite",
     "storage",
     "contextMenus"
-  ],
-  "host_permissions": [
-    "<all_urls>"
   ],
   "web_accessible_resources": [
     {
