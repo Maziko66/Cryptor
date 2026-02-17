@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container" id="mainView">
+
+    <header>
+      <div class="logo-row">
+        <div class="logo-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAEUUlEQVR4nJ2Ua0xTZxjH/+9pz3vankKllDkSnM50xjWTJUNwyzIwUVl2N3E1YZcPZpHpFgMmoiMZOXSZJFxc1YlK1BBxVVOdWxYWthFWdFmYzm3GC+4idCg3wVKxQgttz7MPRSgFTeb/08n7PM/vfc5zeYEHye3WgDxaMDZ1xhhAHi3cbs0DY2cVgYFImGQBsNnSjGarNZlN8yMBBDYjHoB2xomiCGAOFWBk/KEkL7xk/jpVRP4/opAOMGjDar8wEm7RXeo6NMyYZzLG4VDjMWwG1OFQ0wvzLP6P1+xT5819E/5bUYTGf2TBSDtAIIO0GDpxBeakalnfgDt1e8MHvbW/+maDT0GJWNqWlx+V+vde5eoxMl74tCw9b5El0TUj32Y2XK4oFdWjJPXt+dNS/GI6iBgURZgJJhLsgEb6t+aMGHaR6asPl0/ZJppIHi1oqmmm4xtXiuMu4l01pwnT+xKTR9ECgNyydS2nU2Q8XbIhBvzGgPOFYkLJGM4XiuhrkAFA37JlI6cvSW4pXRvPmswWAHj/zp+5b0/PjDbHxo3FfU+FAky8vfc673GejWfFxoUxNSsry0AyzxF8gW8JgPxb+SZDx679cvO2t5SYMwGAQiQY28rWGLr37ZZ/KStmAGmGRhrJKC3NXJUpgzEVBKZFucIAB/XbF5sFo0HL7t68kPp18dLAM4t2Y/g2sDD7/aqOmsKMj06+FA2GWZWzoClqXZCL4QFg2ZNIOlHUFrkzckl43CL4VixJQfPFEZQrbLIedKM/qEYiIL0oR7koA6KaVHkqf7RgeXJkyVOnhjavLIZKLGK15movXl2tdzWPBio3fqdJ1klhPZcpEoXa2R1KnAjGAIg3d3aLvs9bXwUM/O6BoOg/0GbLSDbzG1XndN2ftet6nFd4V+W5p+fPn8MH687ywMHQKkDmt3adEQd3XWcTrFiNAQCtGgKgHQodYWZz3nl3qcwvdb0tcPHZa51On5qRkc3Goz0Yj/Sqj83LvnpN8TODlMPbOwuuNFfoYLa8INwKumiCBdxb6fJWFQD0rd49gQVzt/mXpjjHFm59x3z4PVvo+cV2aHiq+P1lJ0gQhHztZqiRQd3Z9pND79a3hzsqXQiHVfmna7Vjcay4csQGX/93RY1IJ8jkWr8yceoSNaexKFekE6T/a/uOeEYCOLY51hxrMh/cd53fPtCbXphnAZEAb70ORAxEDF5FByJh7obnHuGBQzf4UJ03c1Wm/KCXDnDbNQCQenx9Ng99EZX6attsaTDGLq4TQXUiACxMgYnfrG3jwQZKali3LD72/pr4HZOnZDVXjxEfrPvdXG233TObq+02aWD/H1w9RqamIvv9SzCbJvY9qanode4/OMbH6ol7q49IHZUuPlZPfPhQ0Ni46Y3/B03I3PLJK09IHTuO8uH9o/xO3Yje6zySVvGa9eGg9xRXNysgWQFpNtvDSVGEaZmRWzP7gz5d/wF6ntzFpzveFQAAAABJRU5ErkJggg==" width="22" height="22" alt="Cryptor logo" style="display:block;filter:drop-shadow(0 0 6px rgba(0,255,157,0.5));" />
+        </div>
+        <span class="logo-text">CRYPT<span class="accent">OR</span></span>
+      </div>
+      <div class="header-right">
+        <button class="settings-btn pin-btn" id="pinBtn" title="Popup mode – open as detached window" aria-label="Open as popup window">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 4V2h8v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 10l4-4M19 10V6h-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="settings-btn sidebar-btn" id="sidebarBtn" title="Sidebar mode – dock to page side" aria-label="Open as sidebar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </button>
+        <button class="settings-btn" id="historyBtn" title="History" aria-label="Toggle history panel">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="settings-btn" id="settingsBtn" title="Settings" aria-label="Open settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="settings-btn sidebar-close-btn" id="sidebarCloseBtn" title="Close sidebar" aria-label="Close sidebar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="scan-line"></div>
+
+
+    <div class="history-panel" id="historyPanel">
+      <div class="history-header">
+        <span class="settings-title">HISTORY</span>
+        <button class="history-clear-btn" id="historyClearBtn">CLEAR ALL</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty">No history yet. Encrypt or decrypt something first.</div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-label-row">
+        <label class="section-label">ENCODING MODE</label>
+        <span class="status-text" id="statusText">BINARY</span>
+      </div>
+      <div class="mode-grid">
+        <button class="mode-btn active" data-mode="binary">
+          <span class="mode-icon">01</span>
+          <span class="mode-name">Binary</span>
+        </button>
+        <button class="mode-btn" data-mode="hex">
+          <span class="mode-icon">0x</span>
+          <span class="mode-name">Hex</span>
+        </button>
+        <button class="mode-btn" data-mode="base64">
+          <span class="mode-icon">B=</span>
+          <span class="mode-name">Base64</span>
+        </button>
+        <button class="mode-btn" data-mode="decimal">
+          <span class="mode-icon">0-9</span>
+          <span class="mode-name">Decimal</span>
+        </button>
+        <button class="mode-btn" data-mode="rot13">
+          <span class="mode-icon">R13</span>
+          <span class="mode-name">ROT13</span>
+        </button>
+        <button class="mode-btn" data-mode="morse">
+          <span class="mode-icon">•−</span>
+          <span class="mode-name">Morse</span>
+        </button>
+        <button class="mode-btn" data-mode="vigenere">
+          <span class="mode-icon">Vg</span>
+          <span class="mode-name">Vigenère</span>
+        </button>
+        <button class="mode-btn" data-mode="xor">
+          <span class="mode-icon">XOR</span>
+          <span class="mode-name">XOR</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="xor-options" id="xorOptions" style="display:none;">
+      <div class="xor-type-row">
+        <div class="xor-type-group">
+          <label class="xor-type-label">INPUT</label>
+          <select id="xorInputType" class="xor-type-select">
+            <option value="auto">Auto-Detect</option>
+            <option value="bin">Binary</option>
+            <option value="hex">Hexadecimal</option>
+            <option value="text" selected>Text</option>
+          </select>
+        </div>
+        <div class="xor-type-group">
+          <label class="xor-type-label">KEY</label>
+          <select id="xorKeyType" class="xor-type-select">
+            <option value="auto">Auto-Detect</option>
+            <option value="bin">Binary</option>
+            <option value="hex">Hexadecimal</option>
+            <option value="text" selected>Text</option>
+          </select>
+        </div>
+        <div class="xor-type-group">
+          <label class="xor-type-label">OUTPUT</label>
+          <select id="xorOutputType" class="xor-type-select">
+            <option value="bin">Binary</option>
+            <option value="hex" selected>Hexadecimal</option>
+            <option value="text">Text</option>
+          </select>
+        </div>
+      </div>
+      <div class="xor-key-row">
+        <label class="xor-key-label" for="xorKeyInput">XOR KEY</label>
+        <input
+          type="text"
+          id="xorKeyInput"
+          class="xor-key-input"
+          placeholder="key value"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+    </div>
+
+    <div class="rot-options" id="rotOptions" style="display:none;">
+      <div class="xor-type-row" style="grid-template-columns: 1fr 1fr;">
+        <div class="xor-type-group">
+          <label class="xor-type-label">ROTATION</label>
+          <select id="rotShiftSelect" class="xor-type-select"></select>
+        </div>
+        <div class="xor-type-group">
+          <label class="xor-type-label">CASE</label>
+          <select id="rotCaseSelect" class="xor-type-select">
+            <option value="keep">Keep Case</option>
+            <option value="lower">All Lowercase</option>
+            <option value="upper">All Uppercase</option>
+          </select>
+        </div>
+      </div>
+      <div class="xor-key-row">
+        <label class="xor-key-label">ALPHABET</label>
+        <input
+          type="text"
+          id="rotAlphabetInput"
+          class="xor-key-input alphabet-inline-input"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="alphabet-default-btn alphabet-inline-default" id="rotAlphabetDefaultBtn">DEFAULT</button>
+      </div>
+    </div>
+
+    <div class="vigenere-options" id="vigenereOptions" style="display:none;">
+      <div class="xor-key-row">
+        <label class="xor-key-label" for="vigenereKeyInput">KEY</label>
+        <input
+          type="text"
+          id="vigenereKeyInput"
+          class="xor-key-input"
+          placeholder="keyword"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <select id="vigCaseSelect" class="xor-type-select case-inline-select">
+          <option value="keep">Keep Case</option>
+          <option value="lower">All Lowercase</option>
+          <option value="upper">All Uppercase</option>
+        </select>
+      </div>
+      <div class="xor-key-row">
+        <label class="xor-key-label">ALPHABET</label>
+        <input
+          type="text"
+          id="vigAlphabetInput"
+          class="xor-key-input alphabet-inline-input"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="alphabet-default-btn alphabet-inline-default" id="vigAlphabetDefaultBtn">DEFAULT</button>
+      </div>
+    </div>
+
+    <div class="morse-option-row" id="morseOptionRow" style="display:none;">
+      <label class="toggle-label" for="morseIgnoreToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="morseIgnoreToggle" checked />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Ignore unconvertible characters
+          <span class="toggle-hint">Off: shows [?] for unknown chars</span>
+        </span>
+      </label>
+    </div>
+
+    <section class="section">
+      <label class="section-label" for="previewBox">SELECTED TEXT</label>
+      <textarea class="preview-box" id="previewBox" placeholder="Select text on any page, then click Encrypt or Decrypt" spellcheck="false"></textarea>
+    </section>
+
+    <section class="action-row" id="actionRow">
+      <button class="action-btn encrypt-btn" id="encryptBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="6" width="12" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M4 6V4.5a3 3 0 016 0V6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="7" cy="9.5" r="1" fill="currentColor"/>
+        </svg>
+        ENCRYPT
+      </button>
+      <button class="action-btn decrypt-btn" id="decryptBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="6" width="12" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M4 6V4.5a3 3 0 016 0V6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 2"/>
+          <circle cx="7" cy="9.5" r="1" fill="currentColor"/>
+        </svg>
+        DECRYPT
+      </button>
+    </section>
+
+    <section class="action-row xor-action-row" id="xorActionRow" style="display:none;">
+      <button class="action-btn convert-btn" id="convertBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 4h12M9 1l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 10H1M5 7l-3 3 3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        CONVERT
+      </button>
+    </section>
+
+    <section class="section result-section" id="resultSection" style="display:none;">
+      <label class="section-label" id="outputLabel">OUTPUT</label>
+      <div class="result-box" id="resultBox" aria-labelledby="outputLabel"></div>
+      <div class="result-actions">
+        <button class="mini-btn" id="copyBtn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <rect x="4" y="1" width="7" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="3" width="7" height="8" rx="1" fill="#0d1117" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          COPY
+        </button>
+        <button class="mini-btn replace-btn" id="replaceBtn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          REPLACE IN PAGE
+        </button>
+      </div>
+    </section>
+
+    <div class="error-box" id="errorBox" style="display:none;"></div>
+
+    <div class="footer-toggle">
+      <label class="toggle-label" for="autoApplyToggleMain">
+        <div class="toggle-track">
+          <input type="checkbox" id="autoApplyToggleMain" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Always replace in page
+          <span class="toggle-hint">Auto-applies result to the page after Encrypt / Decrypt</span>
+        </span>
+      </label>
+    </div>
+
+    <footer>
+      <a class="donate-link" id="donateLink" href="https://buymeacoffee.com/maziko" target="_blank">Buy me a coffee! ☕</a>
+      <span class="footer-text" id="footerVersion">v1.0.0</span>
+    </footer>
+
+  </div>
+
+  <div class="container settings-view" id="settingsView" style="display:none;">
+    <header>
+      <div class="logo-row">
+        <button class="settings-back-btn" id="settingsBackBtn" title="Back" aria-label="Back to main view">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <span class="settings-view-title">SETTINGS</span>
+      </div>
+      <div class="header-right">
+        <button class="settings-btn pin-btn" id="pinBtnSettings" title="Popup mode – open as detached window" aria-label="Open as popup window">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 4V2h8v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15 10l4-4M19 10V6h-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="settings-btn sidebar-btn" id="sidebarBtnSettings" title="Sidebar mode – dock to page side" aria-label="Open as sidebar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <line x1="8" y1="3" x2="8" y2="21" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </button>
+        <button class="settings-btn" id="aboutBtn" title="About Cryptor" aria-label="About Cryptor">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="about-panel" id="aboutPanel" style="display:none;">
+      <div class="about-content">
+        <span class="about-title">CRYPTOR v1.0.0</span>
+        <p class="about-text">A cyberpunk-themed text encryption & decryption tool. Supports Binary, Hex, Base64, Decimal, ROT, Morse, Vigenère, and XOR ciphers.</p>
+        <p class="about-text">Select text on any webpage and encrypt or decrypt it instantly via the popup, right-click menu, or keyboard shortcuts.</p>
+        <a class="about-link" href="https://buymeacoffee.com/maziko" target="_blank">Buy me a coffee! ☕</a>
+      </div>
+    </div>
+
+    <div class="scan-line"></div>
+
+    <div class="shortcut-info">
+      <div class="shortcut-row">
+        <span class="shortcut-action">Encrypt</span>
+        <span class="shortcut-keys"><kbd>Alt</kbd><kbd>Shift</kbd><kbd>E</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span class="shortcut-action">Decrypt</span>
+        <span class="shortcut-keys"><kbd>Alt</kbd><kbd>Shift</kbd><kbd>D</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span class="shortcut-action">Open Cryptor</span>
+        <span class="shortcut-keys"><kbd>Alt</kbd><kbd>Shift</kbd><kbd>C</kbd></span>
+      </div>
+      <div class="shortcut-note">Works without opening the popup. Replaces selected text in-place and shows a toast.</div>
+    </div>
+
+    <div class="alphabet-section">
+      <label class="section-label">ALPHABET</label>
+      <div class="alphabet-row">
+        <input
+          type="text"
+          id="alphabetInput"
+          class="alphabet-input"
+          value="abcdefghijklmnopqrstuvwxyz"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="alphabet-default-btn" id="alphabetDefaultBtn">DEFAULT</button>
+      </div>
+      <span class="alphabet-hint">Custom alphabet for ROT13 & Vigenère. Must have unique characters.</span>
+    </div>
+
+    <div class="settings-list">
+      <label class="toggle-label" for="largeTextToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="largeTextToggle" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">Use larger UI text</span>
+      </label>
+      <label class="toggle-label" for="readableFontToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="readableFontToggle" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Use readable font
+          <span class="toggle-hint">Switches to a clean sans-serif for easier reading</span>
+        </span>
+      </label>
+      <label class="toggle-label" for="autoApplyToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="autoApplyToggle" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Always replace in page
+          <span class="toggle-hint">Auto-applies result to the page after Encrypt / Decrypt</span>
+        </span>
+      </label>
+      <label class="toggle-label" for="contextMenuPopupToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="contextMenuPopupToggle" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Right-click → encrypt/decrypt in page
+          <span class="toggle-hint">On: replaces text directly in page. Off: opens a copy-paste popup.</span>
+        </span>
+      </label>
+      <label class="toggle-label" for="autoImportToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="autoImportToggle" />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Auto-import selected text
+          <span class="toggle-hint">Automatically fills selected text from the page when popup opens</span>
+        </span>
+      </label>
+      <label class="toggle-label" for="sidebarSideToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="sidebarSideToggle" checked />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Sidebar on the right
+          <span class="toggle-hint">Off: left side. On: right side of the page.</span>
+        </span>
+      </label>
+      <label class="toggle-label" for="similarCharsToggle">
+        <div class="toggle-track">
+          <input type="checkbox" id="similarCharsToggle" checked />
+          <span class="toggle-thumb"></span>
+        </div>
+        <span class="toggle-text">
+          Use similar chars for non-Latin
+          <span class="toggle-hint">ç→c · ş→s · ğ→g · ö→o · ü→u · æ→ae · ß→ss · ñ→n · å→a · ø→o etc.</span>
+        </span>
+      </label>
+    </div>
+
+    <footer>
+      <a class="donate-link" id="settingsDonateLink" href="https://buymeacoffee.com/maziko" target="_blank">Buy me a coffee! ☕</a>
+      <span class="footer-text" id="settingsVersion">v1.0.0</span>
+    </footer>
+  </div>
+
+  <script src="../shared/ciphers.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
