@@ -1,4 +1,4 @@
-importScripts('../shared/ciphers.js');
+if (typeof Ciphers === 'undefined') importScripts('../shared/ciphers.js');
 
 function showToastOnPage(message, isError) {
   const existing = document.getElementById('__cryptor_toast__');
@@ -270,6 +270,42 @@ function injectCryptorSidebar(iframeUrl, side) {
   });
   container.appendChild(iframe);
   document.body.appendChild(container);
+
+  // Bridge: let the sidebar iframe communicate with the parent page via postMessage
+  window.addEventListener('message', (e) => {
+    if (e.data?.source !== 'cryptor-sidebar') return;
+    if (e.data.type === 'close') {
+      const el = document.getElementById('__cryptor_sidebar__');
+      if (el) {
+        const s = el.dataset.side || 'right';
+        el.style.transform = s === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
+        setTimeout(() => el.remove(), 250);
+      }
+    } else if (e.data.type === 'getSelection') {
+      const text = window.getSelection().toString();
+      iframe.contentWindow.postMessage({ source: 'cryptor-page', type: 'selectionResult', text }, '*');
+    } else if (e.data.type === 'replaceSelection') {
+      const sel = window.getSelection();
+      if (sel.rangeCount > 0) {
+        const el = sel.anchorNode && sel.anchorNode.closest && sel.anchorNode.closest('[contenteditable]');
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+          const start = activeEl.selectionStart, end = activeEl.selectionEnd;
+          activeEl.value = activeEl.value.slice(0, start) + e.data.text + activeEl.value.slice(end);
+          activeEl.selectionStart = activeEl.selectionEnd = start + e.data.text.length;
+          activeEl.dispatchEvent(new Event('input', { bubbles: true }));
+          iframe.contentWindow.postMessage({ source: 'cryptor-page', type: 'replaceResult', success: true }, '*');
+        } else {
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(e.data.text));
+          iframe.contentWindow.postMessage({ source: 'cryptor-page', type: 'replaceResult', success: true }, '*');
+        }
+      } else {
+        iframe.contentWindow.postMessage({ source: 'cryptor-page', type: 'replaceResult', success: false, error: 'No selection' }, '*');
+      }
+    }
+  });
 
   // Animate in
   requestAnimationFrame(() => {

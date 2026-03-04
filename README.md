@@ -1,21 +1,33 @@
-# Cryptor — Chrome Extension
+# Cryptor — Browser Extension
 
-A cyberpunk-themed Chrome extension that encrypts and decrypts selected text on any webpage using 8 encoding modes: Binary, Hex, Base64, Decimal, ROT, Morse, Vigenère, and XOR. Works via popup, sidebar, pinned window, keyboard shortcuts, and right-click context menu.
+A cyberpunk-themed browser extension (Chrome & Firefox) that encrypts and decrypts selected text on any webpage using 8 encoding modes: Binary, Hex, Base64, Decimal, ROT, Morse, Vigenère, and XOR. Works via popup, sidebar, pinned window, keyboard shortcuts, and right-click context menu.
 
 ---
 
 ## Installation
 
-### From Chrome Web Store
-*(Coming soon)*
+### From Store
+- **Chrome Web Store** — *(Coming soon)*
+- **Firefox Add-ons (AMO)** — *(Coming soon)*
 
-### Manual / Developer Load
-1. Download and unzip `cryptor-addon-chrome.zip`
-2. Open Chrome and go to `chrome://extensions`
-3. Enable **Developer mode** (toggle in the top-right)
-4. Click **"Load unpacked"**
-5. Select the `cryptor-addon-chrome` folder
-6. The Cryptor icon will appear in your toolbar (pin it if needed)
+### Build from Source
+Requires [Node.js](https://nodejs.org/).
+```bash
+node build.js          # builds both Chrome and Firefox
+node build.js chrome   # Chrome only
+node build.js firefox  # Firefox only
+```
+Output goes to `build/chrome/` and `build/firefox/`.
+
+### Load in Chrome
+1. Run `node build.js chrome`
+2. Open `chrome://extensions` and enable **Developer mode**
+3. Click **"Load unpacked"** and select the `build/chrome` folder
+
+### Load in Firefox
+1. Run `node build.js firefox`
+2. Open `about:debugging#/runtime/this-firefox`
+3. Click **"Load Temporary Add-on"** and select `build/firefox/manifest.json`
 
 ---
 
@@ -49,7 +61,7 @@ Cryptor can run in three different display modes:
 - **Pinned Window** — Click the pin icon to open Cryptor as a detached floating window that stays open while you work. Positioned near your cursor
 - **Sidebar** — Click the sidebar icon to dock Cryptor to the side of the current webpage. Configurable to left or right side via settings. Slides in/out with animation
 
-Pinned Window and Sidebar are mutually exclusive — activating one will deactivate the other. Both persist across interactions (the popup normally closes when you click away). Sidebar cannot be opened on restricted pages (`chrome://`, `about:`, etc.).
+Pinned Window and Sidebar are mutually exclusive — activating one will deactivate the other. Both persist across interactions (the popup normally closes when you click away). Sidebar cannot be opened on restricted pages (`chrome://`, `about:`, browser internal pages, etc.).
 
 ### Keyboard Shortcuts
 | Action | Windows / Linux | Mac |
@@ -99,20 +111,27 @@ Click the **gear icon** in the header to access:
 
 ```
 cipher-addon-chrome/
-├── manifest.json              # Chrome MV3 extension manifest
-├── icons/
-│   ├── icon16.png             # Toolbar icon (16px)
-│   ├── icon32.png             # Toolbar icon HiDPI (32px)
-│   ├── icon48.png             # Extension management icon (48px)
-│   └── icon96.png             # Chrome Web Store icon (96px)
-├── shared/
-│   └── ciphers.js             # Shared cipher engine (used by both popup and background)
-├── popup/
-│   ├── popup.html             # Popup UI
-│   ├── popup.css              # Cyberpunk terminal theme styles
-│   └── popup.js               # Popup logic, settings, history, display modes
-└── background/
-    └── background.js          # Service worker: shortcuts, context menu, sidebar injection
+├── build.js                   # Build script (node build.js)
+├── manifest.base.json         # Shared manifest fields
+├── manifest.chrome.json       # Chrome-specific overrides
+├── manifest.firefox.json      # Firefox-specific settings (gecko ID)
+├── src/
+│   ├── icons/
+│   │   ├── icon16.png
+│   │   ├── icon32.png
+│   │   ├── icon48.png
+│   │   └── icon96.png
+│   ├── shared/
+│   │   └── ciphers.js         # Shared cipher engine (popup + background)
+│   ├── popup/
+│   │   ├── popup.html         # Popup UI
+│   │   ├── popup.css          # Cyberpunk terminal theme styles
+│   │   └── popup.js           # Popup logic, settings, history, display modes
+│   └── background/
+│       └── background.js      # Service worker: shortcuts, context menu, sidebar
+└── build/                     # Generated output (not committed)
+    ├── chrome/
+    └── firefox/
 ```
 
 ---
@@ -123,7 +142,6 @@ cipher-addon-chrome/
 |-----------|----------------|
 | `activeTab` | Read selected text and inject results into the current tab |
 | `scripting` | Run the cipher logic and replacement on the active page |
-| `clipboardWrite` | Copy results to clipboard |
 | `storage` | Persist settings and history across sessions (via `chrome.storage.sync`) |
 | `contextMenus` | Add the Cryptor submenu to the right-click context menu |
 
@@ -131,7 +149,7 @@ cipher-addon-chrome/
 
 ## Privacy
 
-Cryptor operates **entirely locally**. No text you encrypt or decrypt is ever sent to any server. All cipher logic runs in the browser. History is stored only in your Chrome sync storage.
+Cryptor operates **entirely locally**. No text you encrypt or decrypt is ever sent to any server. All cipher logic runs in the browser. History is stored only in your browser's sync storage.
 
 ---
 

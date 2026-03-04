@@ -140,7 +140,32 @@ async function getActiveTab() {
   return tab;
 }
 
+const _isSidebarIframe = new URLSearchParams(window.location.search).has('sidebar');
+
+// postMessage helpers for sidebar iframe ↔ parent page communication
+function _postToParent(type, data) {
+  window.parent.postMessage(Object.assign({ source: 'cryptor-sidebar', type }, data), '*');
+}
+
+function _waitForParent(responseType, timeout = 1000) {
+  return new Promise(resolve => {
+    const handler = (e) => {
+      if (e.data?.source === 'cryptor-page' && e.data.type === responseType) {
+        window.removeEventListener('message', handler);
+        resolve(e.data);
+      }
+    };
+    window.addEventListener('message', handler);
+    setTimeout(() => { window.removeEventListener('message', handler); resolve(null); }, timeout);
+  });
+}
+
 async function getSelectedText() {
+  if (_isSidebarIframe) {
+    _postToParent('getSelection');
+    const resp = await _waitForParent('selectionResult');
+    return resp?.text ?? '';
+  }
   try {
     const tab = await getActiveTab();
     const results = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: getSelectedTextFromPage });
@@ -149,6 +174,13 @@ async function getSelectedText() {
 }
 
 async function replaceSelectedText(newText) {
+  if (_isSidebarIframe) {
+    _postToParent('replaceSelection', { text: newText });
+    const resp = await _waitForParent('replaceResult');
+    if (resp?.success) { setStatus('ready', 'REPLACED'); setTimeout(() => setStatus('ready'), 2000); }
+    else showError(resp?.error || 'Could not replace — nothing selected on page.');
+    return;
+  }
   try {
     const tab = await getActiveTab();
     const results = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: replaceSelectedTextOnPage, args: [newText] });
@@ -628,10 +660,13 @@ document.getElementById('sidebarCloseBtn').addEventListener('click', async () =>
   sidebarMode = false;
   syncSidebarButtons();
   saveSettings();
-  // Ask the parent page to remove the sidebar container
-  const tab = await getActiveTab();
-  if (tab) {
-    chrome.runtime.sendMessage({ type: 'closeSidebar', tabId: tab.id });
+  if (_isSidebarIframe) {
+    _postToParent('close');
+  } else {
+    const tab = await getActiveTab();
+    if (tab) {
+      chrome.runtime.sendMessage({ type: 'closeSidebar', tabId: tab.id });
+    }
   }
 });
 
