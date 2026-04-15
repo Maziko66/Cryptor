@@ -7,8 +7,8 @@ A cyberpunk-themed browser extension (Chrome & Firefox) that encrypts and decryp
 ## Installation
 
 ### From Store
-- **Chrome Web Store** — *(Coming soon)*
-- **Firefox Add-ons (AMO)** — [Install for Firefox](https://addons.mozilla.org/en-GB/firefox/addon/cryptor/)
+- **Chrome Web Store** - [Install for Chrome](https://chromewebstore.google.com/detail/cryptor/nnnbchaoonckkddfeejogjegjlikfeba)
+- **Firefox Add-ons (AMO)** - [Install for Firefox](https://addons.mozilla.org/en-GB/firefox/addon/cryptor/)
 
 ### Build from Source
 Requires [Node.js](https://nodejs.org/).
